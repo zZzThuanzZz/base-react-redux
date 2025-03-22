@@ -28,7 +28,6 @@ const ModalUpdateUser = (props) => {
     const [previewImage, setPreviewImage] = useState("");
 
     useEffect(() => {
-        console.log('run useEffect', dataUpdate)
         if (!_.isEmpty(dataUpdate)) {
             //update state
             setEmail(dataUpdate.email);
@@ -81,7 +80,6 @@ const ModalUpdateUser = (props) => {
         }
     }
 
-    console.log('check render: data update', dataUpdate)
     return (
         <>
             <Modal
