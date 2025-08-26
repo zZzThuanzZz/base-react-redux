@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
-import { postRegister } from "../../services/apiServices";
+import { postRegister } from "../../services/apiService";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { toast } from 'react-toastify';
 import './Register.scss'

@@ -1,10 +1,9 @@
-import { useState } from 'react';
 import './ManageQuiz.scss';
 import Select from 'react-select';
-import { postCreatNewQuiz } from '../../../../services/apiServices';
+import { useState } from 'react';
+import { postCreateNewQuiz } from '../../../../services/apiService';
 import { toast } from 'react-toastify';
 import TableQuiz from './TableQuiz';
-import { ImOffice } from 'react-icons/im';
 import Accordion from 'react-bootstrap/Accordion';
 
 const options = [
@@ -20,7 +19,7 @@ const ManageQuiz = (props) => {
     const [image, setImage] = useState(null);
 
     const handleChangeFile = (event) => {
-        if (event.target && event.target.value && event.target.files[0]) {
+        if (event.target && event.target.files && event.target.files[0]) {
             setImage(event.target.files[0])
         }
     }
@@ -28,10 +27,11 @@ const ManageQuiz = (props) => {
     const handleSubmitQuiz = async () => {
         //validate
         if (!name || !description) {
-            toast.error('Name/Description is required')
+            toast.error('Name/Description is required');
             return;
         }
-        let res = await postCreatNewQuiz(description, name, type?.value, image);
+
+        let res = await postCreateNewQuiz(description, name, type?.value, image);
         if (res && res.EC === 0) {
             toast.success(res.EM);
             setName('');
@@ -54,9 +54,10 @@ const ManageQuiz = (props) => {
                                     <input
                                         type="text"
                                         className="form-control"
-                                        placeholder='your quizz name'
+                                        placeholder='your quiz name'
                                         value={name}
-                                        onChange={(event) => setName(event.target.value)} />
+                                        onChange={(event) => setName(event.target.value)}
+                                    />
                                     <label>Name</label>
                                 </div>
                                 <div className="form-floating">
@@ -65,7 +66,8 @@ const ManageQuiz = (props) => {
                                         className="form-control"
                                         placeholder='description...'
                                         value={description}
-                                        onChange={(event) => setDescription(event.target.value)} />
+                                        onChange={(event) => setDescription(event.target.value)}
+                                    />
                                     <label >Description</label>
                                 </div>
                                 <div className='my-3'>
@@ -73,15 +75,16 @@ const ManageQuiz = (props) => {
                                         defaultValue={type}
                                         onChange={setType}
                                         options={options}
-                                        placeholder={"Quizz type..."}
+                                        placeholder={"Quiz type..."}
                                     />
                                 </div>
-                                <div className='more-actions form-group'>
-                                    <label className='mb-1'>Upload Image</label>
+                                <div className="more-actions form-group">
+                                    <label className='mb-1'> Upload Image</label>
                                     <input
-                                        type='file'
+                                        type="file"
                                         className='form-control'
-                                        onChange={(event) => handleChangeFile(event)} />
+                                        onChange={(event) => handleChangeFile(event)}
+                                    />
                                 </div>
                                 <div className='mt-3'>
                                     <button
@@ -99,4 +102,5 @@ const ManageQuiz = (props) => {
         </div>
     )
 }
+
 export default ManageQuiz;
