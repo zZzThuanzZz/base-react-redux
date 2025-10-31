@@ -10,26 +10,26 @@ import { v4 as uuidv4 } from 'uuid';
 import _ from 'lodash';
 import Lightbox from "react-awesome-lightbox";
 import { getAllQuizForAdmin, postCreateNewQuestionForQuiz, postCreateNewAnswerForQuestion } from "../../../../services/apiService";
+import { toast } from 'react-toastify';
 
 
 const Questions = (props) => {
-    const [questions, setQuestions] = useState(
-        [
-            {
-                id: uuidv4(),
-                description: '',
-                imageFile: '',
-                imageName: '',
-                answers: [
-                    {
-                        id: uuidv4(),
-                        description: '',
-                        isCorrect: false
-                    }
-                ]
-            }
-        ]
-    )
+    const initQuestions = [
+        {
+            id: uuidv4(),
+            description: '',
+            imageFile: '',
+            imageName: '',
+            answers: [
+                {
+                    id: uuidv4(),
+                    description: '',
+                    isCorrect: false
+                }
+            ]
+        }
+    ];
+    const [questions, setQuestions] = useState(initQuestions)
     const [isPreviewImage, setIsPreviewImage] = useState(false)
     const [dataImagePreview, setDataImagePreview] = useState({
         title: '',
@@ -75,7 +75,7 @@ const Questions = (props) => {
 
         if (type === 'REMOVE') {
             let questionsClone = _.cloneDeep(questions);
-            questionsClone = questionsClone.filter(item => item.id != id);
+            questionsClone = questionsClone.filter(item => item.id !== id);
             setQuestions(questionsClone);
 
         }
@@ -95,7 +95,7 @@ const Questions = (props) => {
         };
         if (type === 'REMOVE') {
             let index = questionsClone.findIndex(item => item.id === questionId);
-            questionsClone[index].answers = questionsClone[index].answers.filter(item => item.id != answerId);
+            questionsClone[index].answers = questionsClone[index].answers.filter(item => item.id !== answerId);
             setQuestions(questionsClone)
         }
     }
@@ -142,20 +142,65 @@ const Questions = (props) => {
     }
     const handleSubmitQuestionForQuiz = async () => {
         //todo
-        //validate data
-        //submit questions 
-        await Promise.all(questions.map(async (question) => {
+        if (_.isEmpty(selectedQuiz)) {
+            toast.error("Please choose a Quiz!")
+            return;
+        }
+
+        //validate answer 
+        let isValidAnswer = true;
+        let indexQ = 0; let indexA = 0
+        for (let i = 0; i < questions.length; i++) {
+            for (let j = 0; j < questions[i].answers.length; j++) {
+                if (!questions[i].answers[j].description) {
+                    isValidAnswer = false;
+                    indexA = j;
+                    break;
+                }
+            }
+            indexQ = 0;
+            if (isValidAnswer === false) break;
+        }
+        if (isValidAnswer === false) {
+            toast.error(`Not empty Answer ${indexA + 1} at Question ${indexQ + 1}`)
+            return;
+        }
+
+        //validate question
+        let isValidQ = true;
+        let indexQ1 = 0
+        for (let i = 0; i < questions.length; i++) {
+            if (!questions[i].description) {
+                isValidQ = false;
+                indexQ1 = i;
+                break;
+            }
+        }
+
+        if (isValidQ === 0) {
+            toast.error(`Not empty description for Question ${indexQ1 + 1}`);
+            return;
+        }
+
+        if (isValidAnswer === false) {
+            toast.error(`Not empty Answer ${indexA + 1} at Question ${indexQ + 1}`)
+            return;
+        }
+
+        for (const question of questions) {
             const q = await postCreateNewQuestionForQuiz(
                 +selectedQuiz.value,
                 question.description,
                 question.imageFile);
             //submit answers
-            await Promise.all(question.answers.map(async (answer) => {
+            for (const answer of question.answers) {
                 await postCreateNewAnswerForQuestion(
                     answer.description, answer.isCorrect, q.DT.id
                 )
-            }))
-        }));
+            }
+        };
+        toast.success('Create questions and answers succed!')
+        setQuestions(initQuestions);
     }
     const handlePreviewImage = (questionId) => {
         let questionsClone = _.cloneDeep(questions);
