@@ -12,7 +12,7 @@ const TableQuiz = (props) => {
 
     useEffect(() => {
         fetchQuiz();
-    }, [])
+    }, [props.reloadUser])
 
     const fetchQuiz = async () => {
         setDataUpdate({});

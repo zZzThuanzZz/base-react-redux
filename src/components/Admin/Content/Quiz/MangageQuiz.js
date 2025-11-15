@@ -19,6 +19,7 @@ const ManageQuiz = (props) => {
     const [description, setDescription] = useState('');
     const [type, setType] = useState('');
     const [image, setImage] = useState(null);
+    const [reloadUser, setReloadUser] = useState(false);
 
     const handleChangeFile = (event) => {
         if (event.target && event.target.files && event.target.files[0]) {
@@ -39,6 +40,7 @@ const ManageQuiz = (props) => {
             setName('');
             setDescription('');
             setImage(null);
+            setReloadUser(prev => !prev)
         } else {
             toast.error(res.EM)
         }
@@ -96,7 +98,7 @@ const ManageQuiz = (props) => {
                             </fieldset>
                         </div>
                         <div className="list-detail">
-                            <TableQuiz />
+                            <TableQuiz reloadUser={reloadUser} />
                         </div>
                     </Accordion.Body>
                 </Accordion.Item>
