@@ -11,7 +11,7 @@ import _ from 'lodash';
 import Lightbox from "react-awesome-lightbox";
 import {
     getQuizWithQA, getAllQuizForAdmin,
-    postCreateNewQuestionForQuiz, postCreateNewAnswerForQuestion
+    postUpsertQA
 } from "../../../../services/apiService";
 import { toast } from 'react-toastify';
 
@@ -245,21 +245,49 @@ const QuizQA = (props) => {
             return;
         }
 
-        for (const question of questions) {
-            const q = await postCreateNewQuestionForQuiz(
-                +selectedQuiz.value,
-                question.description,
-                question.imageFile);
-            //submit answers
-            for (const answer of question.answers) {
-                await postCreateNewAnswerForQuestion(
-                    answer.description, answer.isCorrect, q.DT.id
-                )
+        //let questionsClone = _.cloneDeep(questions);
+        for (let i = 0; i < questionsClone.length; i++) {
+            if (questionsClone[i].imageFile) {
+                questionsClone[i].imageFile =
+                    await toBase64(questionsClone[i].imageFile)
             }
-        };
-        toast.success('Create questions and answers succed!')
-        setQuestions(initQuestions);
+        }
+
+        // 🟦 Remove isValidQuestions & isValidAnswers before sending API
+        let cleanQuestions = questionsClone.map(q => {
+            let { isValidQuestions, ...questionWithoutFlag } = q;
+
+            // xử lý answers
+            questionWithoutFlag.answers = q.answers.map(a => {
+                let { isValidAnswers, ...answerWithoutFlag } = a;
+                return answerWithoutFlag;
+            });
+
+            return questionWithoutFlag;
+        });
+
+        let res = await postUpsertQA({
+            quizId: selectedQuiz.value,
+            questions: cleanQuestions
+        });
+
+        if (res && res.EC === 0) {
+            toast.success(res.EM);
+            fetchQuizWithQA();
+        }
+
+        console.log('>>>check rs: ', res)
+        // toast.success('Create questions and answers succed!')
+        // setQuestions(initQuestions);
     }
+
+    const toBase64 = file => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+    });
+
     const handlePreviewImage = (questionId) => {
         let questionsClone = _.cloneDeep(questions);
         let index = questionsClone.findIndex(item => item.id === questionId);
