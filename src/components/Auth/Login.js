@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { doLogin } from '../../redux/action/userAction';
 import { ImSpinner10 } from "react-icons/im";
+import Language from '../Header/Language';
 
 const Login = (props) => {
     const [email, setEmail] = useState("");
@@ -56,6 +57,7 @@ const Login = (props) => {
             <div className='header'>
                 <span>Don't have an account yet?</span>
                 <button onClick={() => navigate('/register')}>Sign up</button>
+                <Language />
             </div>
             <div className='title col-4 mx-auto'>
                 Nguyễn Như Thuần
