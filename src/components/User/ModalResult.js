@@ -25,7 +25,7 @@ const ModalResult = (props) => {
                     <Button variant="secondary" onClick={handleClose}>
                         Show answers
                     </Button>
-                    <Button variant="primary" onClick={() => { handleClose }}>
+                    <Button variant="primary" onClick={handleClose}>
                         Close
                     </Button>
                 </Modal.Footer>
