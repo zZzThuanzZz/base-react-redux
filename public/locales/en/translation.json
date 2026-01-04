@@ -1,7 +1,70 @@
 {
     "homepage": {
-        "title1": "There's a better way to ask",
-        "title2": "You don't want to make a boring form. And your audience won't answer one. Create a typeform instead - and make everyone happy.",
-        "title3": "Get's started. It's free"
+        "homepage-content": {
+            "title1": "There's a better way to ask",
+            "title2": "You don't want to make a boring form. And your audience won't answer one. Create a typeform instead - and make everyone happy.",
+            "title3": {
+                "login": "Get's started. It's free",
+                "users": "Doing Quiz Now"
+            }
+        }
+    },
+    "assignquizz": {
+        "assign-quiz-container": {
+            "title1": "Select Quiz:",
+            "title2": "Select User:"
+        },
+        "btn-warning": "Assign"
+    },
+    "managequiz": {
+        "quiz-container": {
+            "tab-managequizz": {
+                "title1": "Manage Quizzes",
+                "add-new": {
+                    "title1": "Add new Quiz",
+                    "title2": "Name",
+                    "title3": "Description",
+                    "title4": "Upload Image",
+                    "title5": "Save"
+                }
+            },
+            "tab-quizqa": {
+                "title1": "Update Q/A Quizzes"
+            },
+            "tab-assignquiz": {
+                "title1": "Assign to User"
+            }
+        }
+    },
+    "modaldeletequiz": {
+        "header": {
+            "title": "Confirm Delete the Quiz?"
+        },
+        "body": {
+            "title": "Are you sure to delete this quiz, id ="
+        },
+        "footer": {
+            "title1": "Cancel",
+            "title2": "Confirm"
+        }
+    },
+    "modalupdatequiz": {
+        "header": {
+            "title": "Update the quiz"
+        },
+        "body": {
+            "title1": "Name",
+            "title2": "Description",
+            "title3": "Difficulty",
+            "title4": "EASY",
+            "title5": "MEDIUM",
+            "title6": "HARD",
+            "title7": "Upload File Image",
+            "title8": "Preview Image"
+        },
+        "footer": {
+            "title1": "Close",
+            "title2": "Save"
+        }
     }
 }

@@ -182,6 +182,7 @@ const QuizQA = (props) => {
                     return answer;
                 }
                 )
+            console.log(questionsClone)
             setQuestions(questionsClone);
         }
     }

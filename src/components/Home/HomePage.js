@@ -17,16 +17,16 @@ const HomePage = (props) => {
             </video>
             <div className='homepage-content'>
                 <div className='title-1'>
-                    {t('homepage.title1')}
+                    {t('homepage.homepage-content.title1')}
                 </div>
                 <div className='title-2'>
-                    {t('homepage.title2')}
+                    {t('homepage.homepage-content.title2')}
                 </div>
                 <div className='title-3'>
                     {isAuthenticated === false ?
-                        <button onClick={() => navigate('/login')}> {t('homepage.title3')}</button>
+                        <button onClick={() => navigate('/login')}> {t('homepage.homepage-content.title3.login')}</button>
                         :
-                        <button onClick={() => navigate('/users')}>Doing Quiz Now</button>
+                        <button onClick={() => navigate('/users')}>{t('homepage.homepage-content.title3.users')}</button>
                     }
                 </div>
             </div>

@@ -5,9 +5,10 @@ const Language = (props) => {
     const handleChangeLanguage = (language) => {
         i18n.changeLanguage(language)
     }
+    const currentLang = i18n.language.startsWith('en') ? 'English' : 'Việt Nam';
     return (
         <>
-            <NavDropdown title={i18n.language === 'en' ? 'English' : "Việt Nam"} id="basic-nav-dropdown2" className='languages'>
+            <NavDropdown /*title={i18n.language === 'en' ? 'English' : "Việt Nam"}*/ title={currentLang} id="basic-nav-dropdown2" className='languages'>
                 <NavDropdown.Item onClick={() => handleChangeLanguage('en')}>English</NavDropdown.Item>
                 <NavDropdown.Item onClick={() => handleChangeLanguage('vi')}>Việt Nam</NavDropdown.Item>
             </NavDropdown>

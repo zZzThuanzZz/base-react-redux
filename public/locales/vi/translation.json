@@ -2,6 +2,65 @@
     "homepage": {
         "title1": "Có rất nhiều cách để hỏi...",
         "title2": "Bạn không muốn tạo một biểu mẫu nhàm chán. Và khán giả của bạn cũng sẽ không muốn trả lời nó. Hãy tạo một typeform thay thế — và làm mọi người đều cảm thấy thích thú.",
-        "title3": "Bắt đầu nào. Hoàn toàn miễn phí."
+        "title3": "Bắt đầu nào. Hoàn toàn miễn phí.",
+        "title4": "Thử ngay"
+    },
+    "assignquizz": {
+        "assign-quiz-container": {
+            "title1": "Chọn bài Quiz",
+            "title2": "Chọn người được gán:"
+        },
+        "btn-warning": "Gán"
+    },
+    "managequiz": {
+        "quiz-container": {
+            "tab-managequizz": {
+                "title1": "Quản lí Quiz",
+                "add-new": {
+                    "title1": "Thêm mới Quiz",
+                    "title2": "Tên",
+                    "title3": "Mô tả",
+                    "title4": "Tải lên ảnh",
+                    "title5": "Lưu"
+                }
+            },
+            "tab-quizqa": {
+                "title1": "Cập nhật câu hỏi/trả lời Quizzes"
+            },
+            "tab-assignquiz": {
+                "title1": "Gán Quiz cho người dùng"
+            }
+        }
+    },
+    "modaldeletequiz": {
+        "header": {
+            "title": "Xác nhận xóa Quizz?"
+        },
+        "body": {
+            "title": "Bạn có chắc muốn xóa quizz này, id ="
+        },
+        "footer": {
+            "title1": "Hủy",
+            "title2": "Xác nhận"
+        }
+    },
+    "modalupdatequiz": {
+        "header": {
+            "title": "Cập nhật Quiz"
+        },
+        "body": {
+            "title1": "Tên",
+            "title2": "Mô tả",
+            "title3": "Mức độ",
+            "title4": "DỄ",
+            "title5": "TRUNG BÌNH",
+            "title6": "KHÓ",
+            "title7": "Tải lên file ảnh",
+            "title8": "Xem trước ảnh"
+        },
+        "footer": {
+            "title1": "Đóng",
+            "title2": "Lưu"
+        }
     }
 }

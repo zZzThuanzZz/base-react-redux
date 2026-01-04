@@ -96,3 +96,21 @@
         }
     }
 }
+
+.quiz-detail-new-header {
+    padding: 25px 70px;
+
+    a {
+        text-decoration: none !important;
+    }
+}
+
+.correct {
+    color: green;
+    font-size: 25px;
+}
+
+.incorrect {
+    color: red;
+    font-size: 25px;
+}

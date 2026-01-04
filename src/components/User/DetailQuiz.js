@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, NavLink } from "react-router-dom";
 import { getDataQuiz, postSubmitQuiz } from "../../services/apiService";
 import _ from "lodash";
 import './DetailQuiz.scss';
 import Question from "./Question";
 import ModalResult from "./ModalResult";
 import RightContent from "./Content/RightContent";
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 const DetailQuiz = (props) => {
     const params = useParams();
@@ -13,6 +14,8 @@ const DetailQuiz = (props) => {
     const quizId = params.id;
     const [dataQuiz, setDataQuiz] = useState([]);
     const [index, setIndex] = useState(0);
+    const [isSubmitQuiz, setIsSubmitQuiz] = useState(false);
+    const [isShowAnswer, setIsShowAnswer] = useState(false);
 
     const [isShowModalResult, setIsShowModalResult] = useState(false);
     const [dataModalResult, setDataModalResult] = useState({})
@@ -39,6 +42,7 @@ const DetailQuiz = (props) => {
                             image = item.image;
                         }
                         item.answers.isSelected = false;
+                        item.answers.isCorrect = false;
                         answers.push(item.answers);
                     })
                     answers = _.orderBy(answers, ['id'], ['asc']);
@@ -71,7 +75,7 @@ const DetailQuiz = (props) => {
         }
         let index = dataQuizClone.findIndex(item => +item.questionId === +questionId)
         if (index > -1) {
-            // dataQuizClone[index] = question;
+            dataQuizClone[index] = question;
             setDataQuiz(dataQuizClone);
         }
 
@@ -104,8 +108,8 @@ const DetailQuiz = (props) => {
             payload.answers = answers;
             //submit api
             let res = await postSubmitQuiz(payload)
-            console.log('check res: ', res)
             if (res && res.EC === 0) {
+                setIsSubmitQuiz(true);
                 setDataModalResult({
                     countCorrect: res.DT.countCorrect,
                     countTotal: res.DT.countTotal,
@@ -113,57 +117,103 @@ const DetailQuiz = (props) => {
                 }
                 )
                 setIsShowModalResult(true);
+
+                //update DataQuiz with correct answer
+                if (res.DT && res.DT.quizData) {
+                    let dataQuizClone = _.cloneDeep(dataQuiz);
+                    let a = res.DT.quizData;
+                    for (let q of a) {
+                        for (let i = 0; i < dataQuizClone.length; i++) {
+                            if (+q.questionId === +dataQuizClone[i].questionId) {
+                                //update answer
+                                let newAnswers = [];
+                                for (let j = 0; j < dataQuizClone[i].answers.length; j++) {
+                                    let s = q.systemAnswers.find(item => +item.id === +dataQuizClone[i].answers[j].id)
+                                    if (s) {
+                                        dataQuizClone[i].answers[j].isCorrect = true;
+                                    }
+                                    newAnswers.push(dataQuizClone[i].answers[j]);
+                                }
+                                dataQuizClone[i].answers = newAnswers
+                            }
+                        }
+                    }
+                    setDataQuiz(dataQuizClone);
+                }
+
             } else {
                 alert("something wrongs... ")
             }
         }
     }
+
+    const handleShowAnswer = () => {
+        if (!isSubmitQuiz) return;
+        setIsShowAnswer(true);
+    }
     return (
-        <div className="detail-quiz-container">
-            <div className="left-content">
-                <div className="title">
-                    Quiz {quizId}: {location?.state?.quizTitle}
+        <>
+            <Breadcrumb className="quiz-detail-new-header">
+                <Breadcrumb.Item>
+                    <NavLink to='/' className="breakcrumb-item">Home</NavLink>
+                </Breadcrumb.Item>
+                <Breadcrumb.Item>
+                    <NavLink to='/users' className="breakcrumb-item">Users</NavLink>
+                </Breadcrumb.Item>
+                <Breadcrumb.Item active>Quiz</Breadcrumb.Item>
+            </Breadcrumb>
+            <div className="detail-quiz-container">
+                <div className="left-content">
+                    <div className="title">
+                        Quiz {quizId}: {location?.state?.quizTitle}
+                    </div>
+                    <hr />
+                    <div className="q-body">
+                        <img />
+                    </div>
+                    <div className="q-content">
+                        <Question
+                            index={index}
+                            handleCheckbox={handleCheckbox}
+                            isShowAnswer={isShowAnswer}
+                            isSubmitQuiz={isSubmitQuiz}
+                            data={
+                                dataQuiz && dataQuiz.length > 0
+                                    ?
+                                    dataQuiz[index]
+                                    : []}
+                        />
+                    </div>
+                    <div className="footer">
+                        <button onClick={() => handlePrev()}
+                            className="btn btn-secondary"
+                        >Prev</button>
+                        <button onClick={() => handleNext()}
+                            className="btn btn-primary ml-3"
+                        >Next</button>
+                        <button
+                            disabled={isSubmitQuiz}
+                            onClick={() => handleFinishQuiz()}
+                            className="btn btn-warning"
+                        >Finish</button>
+                    </div>
                 </div>
-                <hr />
-                <div className="q-body">
-                    <img />
-                </div>
-                <div className="q-content">
-                    <Question
-                        index={index}
-                        handleCheckbox={handleCheckbox}
-                        data={
-                            dataQuiz && dataQuiz.length > 0
-                                ?
-                                dataQuiz[index]
-                                : []}
+                <div className="right-content">
+                    <RightContent
+                        handleFinishQuiz={handleFinishQuiz}
+                        dataQuiz={dataQuiz}
+                        setIndex={setIndex}
                     />
                 </div>
-                <div className="footer">
-                    <button onClick={() => handlePrev()}
-                        className="btn btn-secondary"
-                    >Prev</button>
-                    <button onClick={() => handleNext()}
-                        className="btn btn-primary ml-3"
-                    >Next</button>
-                    <button onClick={() => handleFinishQuiz()}
-                        className="btn btn-warning"
-                    >Finish</button>
-                </div>
-            </div>
-            <div className="right-content">
-                <RightContent
-                    handleFinishQuiz={handleFinishQuiz}
-                    dataQuiz={dataQuiz}
-                    setIndex={setIndex}
+                <ModalResult
+                    show={isShowModalResult}
+                    setShow={setIsShowModalResult}
+                    dataModalResult={dataModalResult}
+                    handleShowAnswer={handleShowAnswer}
                 />
             </div>
-            <ModalResult
-                show={isShowModalResult}
-                setShow={setIsShowModalResult}
-                dataModalResult={dataModalResult}
-            />
-        </div>
+        </>
+
     )
 }
 

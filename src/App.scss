@@ -28,6 +28,31 @@ body {
 
 .app-container {
   .header-container {
+    .bg-body-tertiary {
+      .navbar-brand {
+        .brand-icon {
+          svg {
+            margin: -7px 5px 0 5px
+          }
+
+          font-size: 25px;
+          color: #00bfff;
+          animation: spin 5s linear infinite;
+          display: inline-block;
+        }
+
+        @keyframes spin {
+          from {
+            transform: scale(1) rotate(0deg);
+          }
+
+          to {
+            transform: scale(1) rotate(360deg);
+          }
+        }
+      }
+    }
+
     .btn-login {
       border-radius: 5px;
       margin-right: 15px;

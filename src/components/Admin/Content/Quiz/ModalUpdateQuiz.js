@@ -5,6 +5,7 @@ import { FcPlus } from 'react-icons/fc';
 import { toast } from 'react-toastify';
 import { putUpdateQuizForAdmin } from '../../../../services/apiService';
 import _ from 'lodash';
+import { useTranslation, Trans } from 'react-i18next';
 
 const ModalUpdateQuiz = (props) => {
     const { show, setShow, dataUpdate, setDataUpdate } = props;
@@ -14,6 +15,7 @@ const ModalUpdateQuiz = (props) => {
     const [type, setType] = useState("");
     const [image, setImage] = useState("");
     const [previewImage, setPreviewImage] = useState("");
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (!_.isEmpty(dataUpdate)) {
@@ -81,12 +83,12 @@ const ModalUpdateQuiz = (props) => {
                 className='modal-add-user'
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Update the quiz</Modal.Title>
+                    <Modal.Title>{t('modalupdatequiz.header.title')}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form className="row g-3">
                         <div className="col-md-6">
-                            <label className="form-label">Name</label>
+                            <label className="form-label">{t('modalupdatequiz.body.title1')}</label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -95,7 +97,7 @@ const ModalUpdateQuiz = (props) => {
                             />
                         </div>
                         <div className="col-md-6">
-                            <label className="form-label">Description</label>
+                            <label className="form-label">{t('modalupdatequiz.body.title2')}</label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -105,20 +107,20 @@ const ModalUpdateQuiz = (props) => {
                         </div>
 
                         <div className="col-md-4">
-                            <label className="form-label">Difficulty</label>
+                            <label className="form-label">{t('modalupdatequiz.body.title3')}</label>
                             <select className="form-select"
                                 onChange={(event) => setType(event.target.value)}
                                 value={type}
                             >
-                                <option value="EASY">EASY</option>
-                                <option value="MEDIUM">MEDIUM</option>
-                                <option value="HARD">HARD</option>
+                                <option value="EASY">{t('modalupdatequiz.body.title4')}</option>
+                                <option value="MEDIUM">{t('modalupdatequiz.body.title5')}</option>
+                                <option value="HARD">{t('modalupdatequiz.body.title6')}</option>
                             </select>
                         </div>
 
                         <div className='col-md-12'>
                             <label className="form-label label-upload" htmlFor='labelUpload'>
-                                <FcPlus /> Upload File Image
+                                <FcPlus /> {t('modalupdatequiz.body.title7')}
                             </label>
                             <input
                                 type="file"
@@ -131,17 +133,17 @@ const ModalUpdateQuiz = (props) => {
                             {previewImage ?
                                 <img src={previewImage} />
                                 :
-                                <span>Preview Image</span>
+                                <span>{t('modalupdatequiz.body.title8')}</span>
                             }
                         </div>
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
-                        Close
+                        {t('modalupdatequiz.footer.title1')}
                     </Button>
                     <Button variant="primary" onClick={() => handSubmitUpdateQuiz()}>
-                        Save
+                        {t('modalupdatequiz.footer.title2')}
                     </Button>
                 </Modal.Footer>
             </Modal>
