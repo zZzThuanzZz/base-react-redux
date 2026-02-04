@@ -4,6 +4,12 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## API Integration
+This front-end consumes REST APIs via Axios.
+The API layer is organized under src/services/.
+
+Backend API: https://github.com/zZzThuanzZz/quizz-backend.git
+
 ## Available Scripts
 
 In the project directory, you can run:
