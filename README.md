@@ -1,8 +1,67 @@
-#Node.js v14.17.0
+# Node.js v14.17.0
 
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+# Quiz Frontend Application
+
+## 📌 Description
+
+A frontend web application that allows users to answer quiz questions and receive instant feedback.
+
+## 🎯 Purpose
+
+Built to strengthen frontend fundamentals, including component-based architecture, state management, and user interaction handling in React.
+
+## 🛠 Tech Stack
+
+- React
+  
+- JavaScript
+  
+- HTML / CSS
+
+## ✨ Features
+
+- Multiple choice quiz questions
+  
+- Score calculation
+  
+- Dynamic UI updates
+  
+- Responsive layout
+
+## 📂 Project Structure
+
+- Component-based architecture
+  
+- Clear separation of UI components
+  
+- Centralized state handling
+
+## 🚀 How to Run
+
+```bash
+npm install
+npm start
+```
+
+## API Integration
+
+This front-end consumes REST APIs via Axios.
+
+The API layer is organized under src/api/.
+
+Backend API: https://github.com/zZzThuanzZz/quizz-backend.git
+
+## 📈 What I Learned
+
+- Building reusable React components
+  
+- Managing UI state and user interactions
+  
+- Structuring frontend projects for maintainability
 
 ## Available Scripts
 
