@@ -47,6 +47,14 @@ npm install
 npm start
 ```
 
+## API Integration
+
+This front-end consumes REST APIs via Axios.
+
+The API layer is organized under src/api/.
+
+Backend API: https://github.com/zZzThuanzZz/quizz-backend.git
+
 ## 📈 What I Learned
 
 - Building reusable React components
