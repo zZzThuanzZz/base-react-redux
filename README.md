@@ -20,7 +20,9 @@ Built to strengthen frontend fundamentals, including component-based architectur
   
 - JavaScript
   
-- HTML / CSS
+- HTML / SCSS
+
+- Bootstrap
 
 ## ✨ Features
 
