@@ -51,7 +51,7 @@ npm start
 
 This front-end consumes REST APIs via Axios.
 
-The API layer is organized under src/api/.
+The API layer is organized under src/services/.
 
 Backend API: https://github.com/zZzThuanzZz/quizz-backend.git
 
